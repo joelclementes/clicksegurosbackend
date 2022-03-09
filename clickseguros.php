@@ -15,7 +15,7 @@ class Seguros{
     const DB = "clickseguros";
 
     const FILESPATH = "documentosAdjuntos/";
-    const FILESPATHSTORE = "../../documentosAdjuntos";
+    const FILESPATHSTORE = "documentosAdjuntos";
 
     //******************** */ CATÁLOGO DE TIPOS DE SEGURO *************************/
     public function cattiposeguro_select_all(){
@@ -25,18 +25,28 @@ class Seguros{
     }
 
     //********************** C R U D *******************/
-    public function segurovehiculo_insert($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$tiposeguro,$tipopersona,$modelo,$marca,$version,$transmision,$descripcionversion,$tipodecobertura,$nameArchivo,$sizeArchivo,$tmpArchivo,$typeArchivo){
+    public function solicitudvehiculo_insert($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$tiposeguro,$tipopersona,$modelo,$marca,$version,$transmision,$descripcionversion,$tipodecobertura,$nameArchivo,$sizeArchivo,$tmpArchivo,$typeArchivo){
         $target_dir = self::FILESPATHSTORE;
         if (!file_exists($target_dir)) {
 			mkdir($target_dir, 0777, true);
 		}
-        $tarjet_file = $target_dir.'/'.basename($nameArchivo);
+        $archivo = $celular.'_'.basename($nameArchivo);
+        $tarjet_file = $target_dir.'/'.$archivo;
         if(move_uploaded_file($tmpArchivo,$tarjet_file)){
             $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
-            $sentencia = "INSERT INTO solicitudsegurovehiculo (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro,tipopersona,modelo,marca,version,transmision,descripcionversion,tipodecobertura) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro','$tipopersona','$modelo','$marca','$version','$transmision','$descripcionversion','$tipodecobertura')";
-            return $ProcesosBD->ejecutaSentencia($sentencia);
+            $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro,archivo) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro','$archivo')";
+            $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
+            $sentencia2 = "INSERT INTO solicitudsegurovehiculo (idSolicitud,tipopersona,modelo,marca,version,transmision,descripcionversion,tipodecobertura) VALUES ($ultimoIdSolicitud,'$tipopersona','$modelo','$marca','$version','$transmision','$descripcionversion','$tipodecobertura')";
+            return $ProcesosBD->ejecutaSentencia($sentencia2);
         }
     }
 
+    public function solicitudvehiculo_insertsinarchivos($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$tiposeguro,$tipopersona,$modelo,$marca,$version,$transmision,$descripcionversion,$tipodecobertura){
+            $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+            $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro')";
+            $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
+            $sentencia2 = "INSERT INTO solicitudsegurovehiculo (idSolicitud,tipopersona,modelo,marca,version,transmision,descripcionversion,tipodecobertura) VALUES ($ultimoIdSolicitud,'$tipopersona','$modelo','$marca','$version','$transmision','$descripcionversion','$tipodecobertura')";
+            return $ProcesosBD->ejecutaSentencia($sentencia2);
+    }
 
 }
