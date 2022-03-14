@@ -49,7 +49,13 @@ class Seguros{
         return $ProcesosBD->ejecutaSentencia($sentencia2);
     }
 
-    public function solicitudgastosmedicos_insert($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$asegurados){
+    public function solicitudgastosmedicos_insertsinarchivos($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$asegurados){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro')";
+        $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
+        
+        $sentencia2 = "INSERT INTO solicitudsegurovehiculo (idSolicitud,tipopersona,modelo,marca,version,transmision,descripcionversion,tipodecobertura) VALUES ($ultimoIdSolicitud,'$tipopersona','$modelo','$marca','$version','$transmision','$descripcionversion','$tipodecobertura')";
+        return $ProcesosBD->ejecutaSentencia($sentencia2);
         return $asegurados;
     }
 }

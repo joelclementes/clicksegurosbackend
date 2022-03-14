@@ -56,8 +56,8 @@ switch ($proceso){
             $_POST["tipodecobertura"],
         );
         break;
-        case "SOLICITUDGASTOSMEDICOS_INSERT":
-            print $oClick->solicitudgastosmedicos_insert(
+        case "SOLICITUDGASTOSMEDICOS_INSERTSINARCHIVOS":
+            print $oClick->solicitudgastosmedicos_insertsinarchivos(
                 $_POST["fecha"],
                 $_POST["nombre"],
                 $_POST["apellidos"],
