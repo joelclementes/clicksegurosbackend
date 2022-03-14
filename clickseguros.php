@@ -49,13 +49,43 @@ class Seguros{
         return $ProcesosBD->ejecutaSentencia($sentencia2);
     }
 
-    public function solicitudgastosmedicos_insertsinarchivos($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$asegurados){
+    public function solicitudgastosmedicos_insert($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$tiposeguro,$asegurados,$nameArchivo,$sizeArchivo,$tmpArchivo,$typeArchivo){
+        $target_dir = self::FILESPATHSTORE;
+        if (!file_exists($target_dir)) {
+			mkdir($target_dir, 0777, true);
+		}
+        $archivo = $celular.'_'.basename($nameArchivo);
+        $tarjet_file = $target_dir.'/'.$archivo;
+        if(move_uploaded_file($tmpArchivo,$tarjet_file)){
+            $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+            $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro,archivo) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro','$archivo')";
+            $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
+            $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados(5,$asegurados);
+            return $ProcesosBD->ejecutaSentencia($sentencia2);
+        }
+    }
+
+    public function solicitudgastosmedicos_insertsinarchivos($fecha,$nombre,$apellidos,$pais,$codigopostal,$celular,$correo,$codigoepisodio,$tiposeguro,$asegurados){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
         $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro')";
         $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
         
-        $sentencia2 = "INSERT INTO solicitudsegurovehiculo (idSolicitud,tipopersona,modelo,marca,version,transmision,descripcionversion,tipodecobertura) VALUES ($ultimoIdSolicitud,'$tipopersona','$modelo','$marca','$version','$transmision','$descripcionversion','$tipodecobertura')";
+        $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados(5,$asegurados);
         return $ProcesosBD->ejecutaSentencia($sentencia2);
-        return $asegurados;
+    }
+
+    private function construyeInsertAsegurados($id,$asegurados){
+        $arrDatos = json_decode($asegurados, true);
+        $totRegs = count($arrDatos);
+        $contador = 0;
+        $cadena="";
+        foreach($arrDatos as $d){
+            $cadena .= "(".$id.",'".$d["nombre"]."','".$d["genero"]."','".$d["fechanacimiento"]."','".$d["ocupacion"]."','".$d["practicadeportespeligrosos"]."','".$d["parentezco"]."')";
+            $contador += 1;
+            if($contador<$totRegs){
+                $cadena .= ",";
+            }
+        }
+        return $cadena;
     }
 }

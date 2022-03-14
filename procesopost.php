@@ -56,18 +56,39 @@ switch ($proceso){
             $_POST["tipodecobertura"],
         );
         break;
-        case "SOLICITUDGASTOSMEDICOS_INSERTSINARCHIVOS":
-            print $oClick->solicitudgastosmedicos_insertsinarchivos(
-                $_POST["fecha"],
-                $_POST["nombre"],
-                $_POST["apellidos"],
-                $_POST["pais"],
-                $_POST["codigopostal"],
-                $_POST["celular"],
-                $_POST["correo"],
-                $_POST["codigoepisodio"],
-                $_POST["asegurados"]
-            );
-            break;
+
+    case "SOLICITUDGASTOSMEDICOS_INSERT":
+        print $oClick->solicitudgastosmedicos_insert(
+            $_POST["fecha"],
+            $_POST["nombre"],
+            $_POST["apellidos"],
+            $_POST["pais"],
+            $_POST["codigopostal"],
+            $_POST["celular"],
+            $_POST["correo"],
+            $_POST["codigoepisodio"],
+            $_POST["tiposeguro"],
+            $_POST["asegurados"],
+            $_FILES["archivo"]["name"],
+            $_FILES["archivo"]["size"],
+            $_FILES["archivo"]["tmp_name"],
+            $_FILES["archivo"]["type"]
+        );
+        break;
+        
+    case "SOLICITUDGASTOSMEDICOS_INSERTSINARCHIVOS":
+        print $oClick->solicitudgastosmedicos_insertsinarchivos(
+            $_POST["fecha"],
+            $_POST["nombre"],
+            $_POST["apellidos"],
+            $_POST["pais"],
+            $_POST["codigopostal"],
+            $_POST["celular"],
+            $_POST["correo"],
+            $_POST["codigoepisodio"],
+            $_POST["tiposeguro"],
+            $_POST["asegurados"]
+        );
+        break;
 }
 ?>
