@@ -53,7 +53,7 @@ switch ($proceso){
             $_POST["version"],
             $_POST["transmision"],
             $_POST["descripcionversion"],
-            $_POST["tipodecobertura"],
+            $_POST["tipodecobertura"]
         );
         break;
 
@@ -90,5 +90,89 @@ switch ($proceso){
             $_POST["asegurados"]
         );
         break;
+    case "SOLICITUDVIDAAHORRO_INSERT":
+        print $oClick->solicitudvidaahorro_insert(
+            $_POST["fecha"],
+            $_POST["nombre"],
+            $_POST["apellidos"],
+            $_POST["pais"],
+            $_POST["codigopostal"],
+            $_POST["celular"],
+            $_POST["correo"],
+            $_POST["codigoepisodio"],
+            $_POST["tiposeguro"],
+            $_POST["nombrecontratante"],
+            $_POST["generocontratante"],
+            $_POST["fechanacimientocontratante"],
+            $_POST["ocupacioncontratante"],
+            $_POST["conyugeproteccion"],
+            $_POST["conyugefechadenacimiento"],
+            $_POST["conyugeedad"],
+            $_POST["conyugegenero"],
+            $_POST["retornoinversionbaja"],
+            $_POST["retornoinversionmedia"],
+            $_POST["retornoinversionalta"],
+            $_FILES["archivo"]["name"],
+            $_FILES["archivo"]["size"],
+            $_FILES["archivo"]["tmp_name"],
+            $_FILES["archivo"]["type"]
+        );
+        break;
+    case "SOLICITUDVIDAAHORRO_INSERTSINARCHIVOS":
+        print $oClick->solicitudvidaahorro_insertsinarchivos(
+            $_POST["fecha"],
+            $_POST["nombre"],
+            $_POST["apellidos"],
+            $_POST["pais"],
+            $_POST["codigopostal"],
+            $_POST["celular"],
+            $_POST["correo"],
+            $_POST["codigoepisodio"],
+            $_POST["tiposeguro"],
+            $_POST["nombrecontratante"],
+            $_POST["generocontratante"],
+            $_POST["fechanacimientocontratante"],
+            $_POST["ocupacioncontratante"],
+            $_POST["conyugeproteccion"],
+            $_POST["conyugefechadenacimiento"],
+            $_POST["conyugeedad"],
+            $_POST["conyugegenero"],
+            $_POST["retornoinversionbaja"],
+            $_POST["retornoinversionmedia"],
+            $_POST["retornoinversionalta"]
+        );
+        break;
+        case "SOLICITUDOTRO_INSERT":
+            print $oClick->solicitudotro_insert(
+                $_POST["fecha"],
+                $_POST["nombre"],
+                $_POST["apellidos"],
+                $_POST["pais"],
+                $_POST["codigopostal"],
+                $_POST["celular"],
+                $_POST["correo"],
+                $_POST["codigoepisodio"],
+                $_POST["tiposeguro"],
+                $_POST["descripcionotro"],
+                $_FILES["archivo"]["name"],
+                $_FILES["archivo"]["size"],
+                $_FILES["archivo"]["tmp_name"],
+                $_FILES["archivo"]["type"]
+            );
+            break;
+        case "SOLICITUDOTRO_INSERTSINARCHIVOS":
+            print $oClick->solicitudotro_insertsinarchivos(
+                $_POST["fecha"],
+                $_POST["nombre"],
+                $_POST["apellidos"],
+                $_POST["pais"],
+                $_POST["codigopostal"],
+                $_POST["celular"],
+                $_POST["correo"],
+                $_POST["codigoepisodio"],
+                $_POST["tiposeguro"],
+                $_POST["descripcionotro"]
+            );
+            break;
 }
 ?>
