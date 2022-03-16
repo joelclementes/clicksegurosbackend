@@ -60,7 +60,7 @@ class Seguros{
             $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
             $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro,archivo) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro','$archivo')";
             $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
-            $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados(5,$asegurados);
+            $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados($ultimoIdSolicitud,$asegurados);
             return $ProcesosBD->ejecutaSentencia($sentencia2);
         }
     }
@@ -70,7 +70,7 @@ class Seguros{
         $sentencia1 = "INSERT INTO solicitud (fecha,nombre,apellidos,pais,codigopostal,celular,correo,codigoepisodio,tiposeguro) VALUES ('$fecha','$nombre','$apellidos','$pais','$codigopostal','$celular','$correo','$codigoepisodio','$tiposeguro')";
         $ultimoIdSolicitud = $ProcesosBD->inserta($sentencia1);
         
-        $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados(5,$asegurados);
+        $sentencia2 = "INSERT INTO solicitudsegurogastosmedicos (idSolicitud,nombre,genero,fechanacimiento,ocupacion,practicadeportespeligrosos,parentezco) VALUES " . $this->construyeInsertAsegurados($ultimoIdSolicitud,$asegurados);
         return $ProcesosBD->ejecutaSentencia($sentencia2);
     }
 
