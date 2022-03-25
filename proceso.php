@@ -12,8 +12,14 @@ $oClick = new Seguros();
 @$proceso = $_GET["proceso"];
 
 switch ($proceso){
+    case "USUARIO_SELECT":
+        print $oClick->usuario_select($_GET["clave"]);
+        break;
     case "CATTIPOSEGURO_SELECT_ALL":
         print $oClick->cattiposeguro_select_all();
+        break;
+    case "CATTIPOSEGURO_SELECT_DISTINCT":
+        print $oClick->cattiposeguro_select_distinct();
         break;
     case "SOLICITUDVEHICULO_INSERTSINARCHIVOS":
         print $oClick->solicitudvehiculo_insertsinarchivos(
@@ -35,6 +41,8 @@ switch ($proceso){
             $_POST["tipodecobertura"],
         );
         break;
-
+    case "SOLICITUD_SELECT":
+        print $oClick->solicitud_select();
+        break;
 }
 ?>

@@ -23,6 +23,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["tipopersona"],
             $_POST["modelo"],
             $_POST["marca"],
@@ -47,6 +48,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["tipopersona"],
             $_POST["modelo"],
             $_POST["marca"],
@@ -68,6 +70,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["asegurados"],
             $_FILES["archivo"]["name"],
             $_FILES["archivo"]["size"],
@@ -87,6 +90,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["asegurados"]
         );
         break;
@@ -101,6 +105,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["nombrecontratante"],
             $_POST["generocontratante"],
             $_POST["fechanacimientocontratante"],
@@ -129,6 +134,7 @@ switch ($proceso){
             $_POST["correo"],
             $_POST["codigoepisodio"],
             $_POST["tiposeguro"],
+            $_POST["cosaasegurada"],
             $_POST["nombrecontratante"],
             $_POST["generocontratante"],
             $_POST["fechanacimientocontratante"],
@@ -153,6 +159,7 @@ switch ($proceso){
                 $_POST["correo"],
                 $_POST["codigoepisodio"],
                 $_POST["tiposeguro"],
+                $_POST["cosaasegurada"],
                 $_POST["descripcionotro"],
                 $_FILES["archivo"]["name"],
                 $_FILES["archivo"]["size"],
@@ -171,8 +178,12 @@ switch ($proceso){
                 $_POST["correo"],
                 $_POST["codigoepisodio"],
                 $_POST["tiposeguro"],
+                $_POST["cosaasegurada"],
                 $_POST["descripcionotro"]
             );
             break;
-}
+        case "LOGINICIO_INSERT":
+            print $oClick->loginicio_insert($_POST["usuario"]);
+            break;
+        }
 ?>
